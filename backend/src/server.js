@@ -42,6 +42,8 @@ const startServer = async () => {
     console.error('[MongoDB] Connection error:', err.message);
   }
 
+  console.log(`[Config] Contract ID: ${process.env.NFT_CONTRACT_ID || 'NOT SET'}`);
+
   app.listen(PORT, () => {
     console.log(`[Server] NFT Music Backend running on port ${PORT}`);
   });

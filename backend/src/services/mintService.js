@@ -1,9 +1,11 @@
 import {
-  Account,
+  SorobanRpc,
+  Contract,
+  Address,
   TransactionBuilder,
-  Operation,
   Networks,
   BASE_FEE,
+  nativeToScVal,
 } from '@stellar/stellar-sdk';
 
 const NFT_CONTRACT_ID = process.env.NFT_CONTRACT_ID;
@@ -11,24 +13,23 @@ const RPC_URL = process.env.STELLAR_RPC_URL || 'https://soroban-testnet.stellar.
 const NETWORK_PASSPHRASE = Networks.TESTNET;
 
 export async function buildMintTransaction(walletAddress, name, musicUrl, artist) {
-  const account = new Account(walletAddress, '0');
-  
-  const mintOperation = Operation.invokeContract({
-    contractAddress: NFT_CONTRACT_ID,
-    method: 'mint',
-    args: [
-      { type: 'address', value: walletAddress },
-      { type: 'string', value: name || 'Music NFT' },
-      { type: 'string', value: musicUrl },
-      { type: 'string', value: artist || 'Unknown' },
-    ],
-  });
+  const rpc = new SorobanRpc.Server(RPC_URL, NETWORK_PASSPHRASE);
+  const account = await rpc.getAccount(walletAddress);
+  const contract = new Contract(NFT_CONTRACT_ID);
+
+  const op = contract.call(
+    'mint',
+    new Address(walletAddress).toScVal(),
+    nativeToScVal(name || 'Music NFT'),
+    nativeToScVal(musicUrl),
+    nativeToScVal(artist || 'Unknown')
+  );
 
   const tx = new TransactionBuilder(account, {
     fee: BASE_FEE,
     networkPassphrase: NETWORK_PASSPHRASE,
   })
-    .addOperation(mintOperation)
+    .addOperation(op)
     .setTimeout(30)
     .build();
 
@@ -36,28 +37,20 @@ export async function buildMintTransaction(walletAddress, name, musicUrl, artist
 }
 
 export async function submitTransaction(signedXDR) {
-  const res = await fetch(RPC_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'sendTransaction',
-      params: {
-        transaction: signedXDR,
-        networkPassphrase: NETWORK_PASSPHRASE,
-      },
-    }),
-  });
+  const rpc = new SorobanRpc.Server(RPC_URL, NETWORK_PASSPHRASE);
 
-  const data = await res.json();
-  
-  if (data.error) {
-    throw new Error(data.error.message || 'Transaction failed');
+  const sendResponse = await rpc.sendTransaction(signedXDR);
+
+  if (sendResponse.error) {
+    throw new Error(sendResponse.error.message || 'Transaction failed');
+  }
+
+  if (sendResponse.status === 'ERROR') {
+    throw new Error(sendResponse.errorResult?.message || 'Transaction failed');
   }
 
   return {
-    txHash: data.result?.hash,
-    explorerUrl: `https://stellar.expert/explorer/testnet/tx/${data.result?.hash}`,
+    txHash: sendResponse.hash,
+    explorerUrl: `https://stellar.expert/explorer/testnet/tx/${sendResponse.hash}`,
   };
 }
