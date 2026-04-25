@@ -10,10 +10,13 @@ interface MusicNFT {
   name: string;
   artist: string;
   musicUrl: string;
+  ipfsHash?: string;
   owner: string;
   txHash: string;
   createdAt: string;
 }
+
+const DEFAULT_IPFS_GATEWAY = 'https://gateway.pinata.cloud/ipfs';
 
 export default function LibraryPage() {
   const { address, isConnected } = useWallet();
@@ -83,25 +86,29 @@ export default function LibraryPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          {music.map((track) => (
-            <div key={track._id} className="card p-6">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-slate-800 rounded-xl flex items-center justify-center text-2xl">
-                  🎵
+          {music.map((track) => {
+            const resolvedMusicUrl =
+              track.musicUrl || (track.ipfsHash ? `${DEFAULT_IPFS_GATEWAY}/${track.ipfsHash}` : '');
+            return (
+              <div key={track._id} className="card p-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-slate-800 rounded-xl flex items-center justify-center text-2xl">
+                    🎵
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-white">{track.name}</h3>
+                    <p className="text-slate-400">{track.artist}</p>
+                    <p className="text-slate-500 text-sm">Token ID: {track.tokenId}</p>
+                  </div>
+                  <audio
+                    src={resolvedMusicUrl}
+                    controls
+                    className="h-10"
+                  />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white">{track.name}</h3>
-                  <p className="text-slate-400">{track.artist}</p>
-                  <p className="text-slate-500 text-sm">Token ID: {track.tokenId}</p>
-                </div>
-                <audio
-                  src={track.musicUrl}
-                  controls
-                  className="h-10"
-                />
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

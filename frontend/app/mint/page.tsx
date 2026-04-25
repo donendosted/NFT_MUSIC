@@ -16,6 +16,7 @@ export default function MintPage() {
   const [uploading, setUploading] = useState(false);
   const [minting, setMinting] = useState(false);
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
+  const [uploadedIpfsHash, setUploadedIpfsHash] = useState<string | null>(null);
   const [mintResult, setMintResult] = useState<any>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +49,7 @@ export default function MintPage() {
     setMusicName('');
     setArtistName('');
     setUploadedUrl(null);
+    setUploadedIpfsHash(null);
     setMintResult(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -77,6 +79,7 @@ export default function MintPage() {
       if (!res.ok) throw new Error(data.error?.message || 'Upload failed');
 
       setUploadedUrl(data.data.url);
+      setUploadedIpfsHash(data.data.ipfsHash);
       toast.success('Uploaded to IPFS!', { id: 'upload' });
     } catch (err: any) {
       toast.error(err.message, { id: 'upload' });
@@ -86,7 +89,7 @@ export default function MintPage() {
   };
 
   const handleMint = async () => {
-    if (!uploadedUrl || !address) return;
+    if (!uploadedIpfsHash || !address) return;
 
     setMinting(true);
     toast.loading('Building transaction...', { id: 'mint' });
@@ -98,7 +101,7 @@ export default function MintPage() {
         body: JSON.stringify({
           walletAddress: address,
           name: musicName || 'Music NFT',
-          musicUrl: uploadedUrl,
+          ipfsHash: uploadedIpfsHash,
           artist: artistName || 'Unknown',
         }),
       });
@@ -120,7 +123,7 @@ export default function MintPage() {
           signedTxXDR: signedXDR,
           walletAddress: address,
           name: musicName || 'Music NFT',
-          musicUrl: uploadedUrl,
+          ipfsHash: uploadedIpfsHash,
           artist: artistName || 'Unknown',
         }),
       });
@@ -159,6 +162,9 @@ export default function MintPage() {
           <div className="text-5xl mb-4">🎉</div>
           <h2 className="text-xl font-bold text-white mb-2">Minted Successfully!</h2>
           <p className="text-slate-400 mb-4">Token ID: {mintResult.tokenId}</p>
+          {mintResult.ipfsHash ? (
+            <p className="text-slate-500 text-xs mb-4 break-all">IPFS: {mintResult.ipfsHash}</p>
+          ) : null}
           <a
             href={mintResult.explorerUrl}
             target="_blank"
@@ -248,13 +254,20 @@ export default function MintPage() {
                 {uploading ? 'Uploading...' : 'Upload to IPFS'}
               </button>
             ) : (
-              <button
-                onClick={handleMint}
-                disabled={minting}
-                className="btn-accent flex-1"
-              >
-                {minting ? 'Minting...' : 'Mint NFT'}
-              </button>
+              <div className="flex-1">
+                {uploadedIpfsHash ? (
+                  <p className="text-slate-500 text-xs mb-2 break-all">
+                    Uploaded hash: {uploadedIpfsHash}
+                  </p>
+                ) : null}
+                <button
+                  onClick={handleMint}
+                  disabled={minting || !uploadedIpfsHash}
+                  className="btn-accent w-full"
+                >
+                  {minting ? 'Minting...' : 'Mint NFT'}
+                </button>
+              </div>
             )}
           </div>
 
