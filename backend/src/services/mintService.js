@@ -1,56 +1,96 @@
 import {
-  SorobanRpc,
-  Contract,
-  Address,
+  StrKey,
   TransactionBuilder,
   Networks,
+  Operation,
   BASE_FEE,
+  Address,
+  xdr,
   nativeToScVal,
 } from '@stellar/stellar-sdk';
 
-const NFT_CONTRACT_ID = process.env.NFT_CONTRACT_ID;
+import { Server as rpc } from '@stellar/stellar-sdk/rpc';
+
+const NFT_CONTRACT_ID = process.env.NFT_CONTRACT_ID || process.env.NFT_COLLECTION_ID;
 const RPC_URL = process.env.STELLAR_RPC_URL || 'https://soroban-testnet.stellar.org';
-const NETWORK_PASSPHRASE = Networks.TESTNET;
+const STELLAR_NETWORK = (process.env.STELLAR_NETWORK || 'testnet').toLowerCase();
+const NETWORK_PASSPHRASE =
+  process.env.STELLAR_NETWORK_PASSPHRASE ||
+  (STELLAR_NETWORK === 'public' ? Networks.PUBLIC : Networks.TESTNET);
+const sorobanServer = new rpc(RPC_URL);
 
-export async function buildMintTransaction(walletAddress, name, musicUrl, artist) {
-  const rpc = new SorobanRpc.Server(RPC_URL, NETWORK_PASSPHRASE);
-  const account = await rpc.getAccount(walletAddress);
-  const contract = new Contract(NFT_CONTRACT_ID);
+export async function buildMintTransaction(walletAddress, name, musicUri, artist) {
+  if (!NFT_CONTRACT_ID) {
+    throw new Error('NFT_CONTRACT_ID is not configured');
+  }
 
-  const op = contract.call(
-    'mint',
-    new Address(walletAddress).toScVal(),
-    nativeToScVal(name || 'Music NFT'),
-    nativeToScVal(musicUrl),
-    nativeToScVal(artist || 'Unknown')
-  );
+  if (!StrKey.isValidContract(NFT_CONTRACT_ID)) {
+    throw new Error('NFT_CONTRACT_ID is invalid');
+  }
+
+  const contractIdBuffer = StrKey.decodeContract(NFT_CONTRACT_ID);
+
+  const account = await sorobanServer.getAccount(walletAddress);
+
+  const invokeContractOp = Operation.invokeHostFunction({
+    func: xdr.HostFunction.hostFunctionTypeInvokeContract(
+      new xdr.InvokeContractArgs({
+        contractAddress: xdr.ScAddress.scAddressTypeContract(
+          contractIdBuffer
+        ),
+        functionName: Buffer.from('mint', 'utf-8'),
+        args: [
+          Address.fromString(walletAddress).toScVal(),
+          nativeToScVal(name || 'Music NFT'),
+          nativeToScVal(musicUri),
+          nativeToScVal(artist || 'Unknown'),
+        ],
+      })
+    ),
+    auth: [],
+  });
 
   const tx = new TransactionBuilder(account, {
     fee: BASE_FEE,
     networkPassphrase: NETWORK_PASSPHRASE,
   })
-    .addOperation(op)
-    .setTimeout(30)
+    .addOperation(invokeContractOp)
+    .setTimeout(300)
     .build();
 
-  return tx.toXDR();
+  const preparedTx = await sorobanServer.prepareTransaction(tx);
+
+  return preparedTx.toEnvelope().toXDR('base64');
 }
 
 export async function submitTransaction(signedXDR) {
-  const rpc = new SorobanRpc.Server(RPC_URL, NETWORK_PASSPHRASE);
+  const transactionWrapper = {
+    toXDR: () => signedXDR,
+  };
 
-  const sendResponse = await rpc.sendTransaction(signedXDR);
+  const sendResult = await sorobanServer.sendTransaction(transactionWrapper);
 
-  if (sendResponse.error) {
-    throw new Error(sendResponse.error.message || 'Transaction failed');
+  if (sendResult.status !== 'PENDING' && sendResult.status !== 'OK') {
+    throw new Error(sendResult.error || 'Failed to send transaction');
   }
 
-  if (sendResponse.status === 'ERROR') {
-    throw new Error(sendResponse.errorResult?.message || 'Transaction failed');
+  let result;
+  while (true) {
+    result = await sorobanServer.getTransaction(sendResult.hash);
+
+    if (result.status === 'SUCCESS') {
+      break;
+    }
+
+    if (result.status === 'FAILED') {
+      throw new Error('Transaction failed');
+    }
+
+    await new Promise((r) => setTimeout(r, 1000));
   }
 
   return {
-    txHash: sendResponse.hash,
-    explorerUrl: `https://stellar.expert/explorer/testnet/tx/${sendResponse.hash}`,
+    txHash: sendResult.hash,
+    explorerUrl: `https://stellar.expert/explorer/testnet/tx/${sendResult.hash}`,
   };
 }
