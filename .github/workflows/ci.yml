@@ -63,12 +63,16 @@ jobs:
         with:
           node-version: "20"
           cache: "yarn"
+          cache-dependency-path: backend/yarn.lock
 
-      - name: Enable Corepack
-        run: corepack enable
+      - name: Ensure Yarn
+        run: |
+          if ! command -v yarn >/dev/null 2>&1; then
+            npm install -g yarn@1.22.22
+          fi
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile --non-interactive
 
       - name: Syntax check
         run: |
