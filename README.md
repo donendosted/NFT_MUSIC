@@ -24,6 +24,20 @@
 3. User signs in Freighter wallet.
 4. Backend submits signed tx to Stellar testnet and stores minted NFT record.
 
+## Video Demo
+
+
+
+https://github.com/user-attachments/assets/3c389887-cf17-46da-af80-85d355949d08
+
+
+## Mobile Responsive View
+
+<img width="414" height="828" alt="Screenshot 2026-04-25 at 12-10-09 NFT Music - Mint   Collect Music NFTs" src="https://github.com/user-attachments/assets/8c43d51e-c1a4-41ca-a74f-c3bb679f5851" />
+<img width="414" height="828" alt="Screenshot 2026-04-25 at 12-10-37 NFT Music - Mint   Collect Music NFTs" src="https://github.com/user-attachments/assets/381513f6-ed53-42d1-934f-02dbd867d4a9" />
+<img width="414" height="828" alt="Screenshot 2026-04-25 at 12-10-47 NFT Music - Mint   Collect Music NFTs" src="https://github.com/user-attachments/assets/a4568d18-e209-4a70-9364-9fb00adf9a18" />
+
+
 ## How to Install (Local Development)
 
 ### Prerequisites
@@ -89,3 +103,7 @@ Required GitHub repository secrets:
 
 - `VERCEL_DEPLOY_HOOK_URL`
 - `RENDER_DEPLOY_HOOK_URL`
+
+## Developer
+
+donendosted
