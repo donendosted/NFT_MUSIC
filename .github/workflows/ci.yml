@@ -62,16 +62,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
-          cache-dependency-path: backend/pnpm-lock.yaml
+          cache: "yarn"
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: yarn install
 
       - name: Syntax check
         run: |
