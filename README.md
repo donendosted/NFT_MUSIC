@@ -1,3 +1,5 @@
+<img width="214" height="57" alt="image" src="https://github.com/user-attachments/assets/fcd4d811-2cff-4f09-b62c-0ba49f1b8847" />
+
 # NFT Music
 
 > Mint and collect music NFTs on Stellar testnet.
@@ -92,9 +94,12 @@ https://github.com/user-attachments/assets/3c389887-cf17-46da-af80-85d355949d08
 
 ## Mobile Responsive View
 
-<img width="414" height="828" alt="Screenshot 2026-04-25 at 12-10-09 NFT Music - Mint   Collect Music NFTs" src="https://github.com/user-attachments/assets/8c43d51e-c1a4-41ca-a74f-c3bb679f5851" />
-<img width="414" height="828" alt="Screenshot 2026-04-25 at 12-10-37 NFT Music - Mint   Collect Music NFTs" src="https://github.com/user-attachments/assets/381513f6-ed53-42d1-934f-02dbd867d4a9" />
-<img width="414" height="828" alt="Screenshot 2026-04-25 at 12-10-47 NFT Music - Mint   Collect Music NFTs" src="https://github.com/user-attachments/assets/a4568d18-e209-4a70-9364-9fb00adf9a18" />
+<img width="381" height="839" alt="image" src="https://github.com/user-attachments/assets/bb8ca540-0f75-42fe-b203-1f9f5e32d8c3" />
+<img width="381" height="839" alt="image" src="https://github.com/user-attachments/assets/f58fccf4-d4b8-4de6-88d3-709879c6d346" />
+<img width="381" height="839" alt="image" src="https://github.com/user-attachments/assets/fb953aa8-d02b-4d6d-a683-039b2e9e1913" />
+<img width="381" height="839" alt="image" src="https://github.com/user-attachments/assets/aeb7929f-ba6a-4b4e-b146-803fead6c7d4" />
+<img width="381" height="839" alt="image" src="https://github.com/user-attachments/assets/4098289c-fbb1-47b8-a1dd-a800b232361c" />
+<img width="393" height="851" alt="image" src="https://github.com/user-attachments/assets/ab4b9a5e-f99a-44f5-a38f-a794fac1fa62" />
 
 
 ## How to Install (Local Development)
