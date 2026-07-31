@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useWallet } from '@/hooks/useWallet';
 import { WalletButton } from '@/components/layout/WalletButton';
+import { MarketplaceDrops } from '@/components/nft/MarketplaceDrops';
 
 function SoundOrb() {
   return <div className="relative mx-auto h-[300px] w-[300px] sm:h-[390px] sm:w-[390px]" aria-hidden="true">
@@ -43,6 +44,7 @@ export default function HomePage() {
       </div>
     </section>
 
+    <MarketplaceDrops />
     <section className="page-shell pb-16 sm:pb-24"><div className="rounded-[40px] bg-[#5865f2] px-7 py-12 text-center sm:px-12 sm:py-16"><p className="eyebrow justify-center text-white/75">Open to every sound</p><h2 className="display mx-auto mt-4 max-w-4xl text-4xl leading-none sm:text-6xl">MAKE THE FIRST DROP COUNT.</h2><p className="mx-auto mt-5 max-w-xl text-lg text-white/80">Connect Freighter, upload your audio, and give your next release a permanent home.</p><Link href="/mint" className="btn-accent mt-8 text-lg">Start minting</Link></div></section>
   </>;
 }
