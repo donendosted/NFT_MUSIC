@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const musicNFTSchema = new mongoose.Schema({
-  tokenId: { type: Number, required: true, unique: true },
+  tokenId: { type: Number, required: true },
   name: { type: String, required: true },
   artist: { type: String, default: 'Unknown' },
   musicUrl: { type: String, required: true },
@@ -25,6 +25,7 @@ const musicNFTSchema = new mongoose.Schema({
 
 musicNFTSchema.index({ walletAddress: 1 });
 musicNFTSchema.index({ owner: 1 });
+musicNFTSchema.index({ contractAddress: 1, tokenId: 1 }, { unique: true });
 musicNFTSchema.index({ 'listing.listingId': 1, 'listing.active': 1 });
 
 export default mongoose.models.MusicNFT || mongoose.model('MusicNFT', musicNFTSchema);

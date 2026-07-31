@@ -80,8 +80,10 @@ router.post('/submit', async (req, res) => {
 
     const result = await submitTransaction(signedTxXDR);
 
-    const count = await MusicNFT.countDocuments();
-    const tokenId = count + 1;
+    const tokenId = Number(result.returnValue);
+    if (!Number.isSafeInteger(tokenId) || tokenId <= 0) {
+      throw new Error('Music NFT contract did not return a valid token ID');
+    }
 
     const musicNFT = new MusicNFT({
       tokenId,

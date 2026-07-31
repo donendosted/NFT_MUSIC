@@ -62,6 +62,15 @@ transaction. `POST /api/purchase` submits it, polls Soroban RPC, persists the
 confirmed purchase, and returns the real RPC transaction hash and Stellar
 Expert URL.
 
+Because v1 and v2 token IDs overlap, run this one-time database migration after
+deploying the backend so tokens are uniquely identified by both contract and
+token ID:
+
+```bash
+cd backend
+npm run migrate:music-indexes
+```
+
 ## Very Short App Workflow
 
 1. Upload audio to Pinata from the mint page.

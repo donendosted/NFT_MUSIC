@@ -5,9 +5,10 @@ import { submitPurchaseTransaction } from '../services/purchaseService.js';
 
 const router = express.Router();
 const PAYMENT_ASSET_CONTRACT_ID = process.env.PAYMENT_ASSET_CONTRACT_ID;
+const NFT_CONTRACT_ID = process.env.NFT_CONTRACT_ID || process.env.NFT_COLLECTION_ID;
 
 async function findOwnedNft(tokenId, seller) {
-  return MusicNFT.findOne({ tokenId: Number(tokenId), walletAddress: seller.toLowerCase(), 'listing.active': { $ne: true } });
+  return MusicNFT.findOne({ tokenId: Number(tokenId), contractAddress: NFT_CONTRACT_ID, walletAddress: seller.toLowerCase(), 'listing.active': { $ne: true } });
 }
 
 router.post('/build', async (req, res) => {

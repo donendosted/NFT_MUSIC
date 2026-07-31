@@ -7,6 +7,7 @@ import {
   Address,
   xdr,
   nativeToScVal,
+  scValToNative,
 } from '@stellar/stellar-sdk';
 
 import { Server as rpc } from '@stellar/stellar-sdk/rpc';
@@ -91,6 +92,7 @@ export async function submitTransaction(signedXDR) {
 
   return {
     txHash: sendResult.hash,
+    returnValue: result.returnValue ? scValToNative(result.returnValue) : null,
     explorerUrl: `https://stellar.expert/explorer/testnet/tx/${sendResult.hash}`,
   };
 }
