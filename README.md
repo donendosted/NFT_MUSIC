@@ -89,7 +89,8 @@ npm run migrate:music-indexes
 
 
 
-https://github.com/user-attachments/assets/3c389887-cf17-46da-af80-85d355949d08
+https://github.com/user-attachments/assets/79bd1083-f66c-409f-86bd-f0d2bd1d382d
+
 
 
 ## Mobile Responsive View
