@@ -17,6 +17,51 @@
 
 - **Music NFT Contract ID (Testnet):** `CAGUOSXM3MURD2C7V3EKJ67OGKZKWB3QXRPJN36AKKXKDV43I5YPZEBK`
 
+## Atomic Purchase Settlement (Testnet)
+
+The original NFT contract above remains deployed. A transfer-capable v2 NFT,
+an escrow marketplace, and a dedicated purchase contract were added alongside
+it so listed music can settle atomically without removing existing contracts.
+
+- **Music NFT v2:** `CAUBEZ6RC7PWP47FZVBKHPVQ6BRS57FPVPZELZFMVINFNZKOEY6L3MXD`
+- **Escrow Marketplace:** `CBWB4TRYIMG5KQSI6HIKRZIUTYHIGNJ4EHUA4PTO6R3TJSHBXCDB56HE`
+- **Music Purchase Contract:** `CD4FPDV7VCCVKQBIKU6MBVUPJFW6KMRMB5H4JT6ENR27QWKIPDYQKE5H`
+- **Settlement asset:** native XLM, represented by Soroban contract `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
+
+The purchase contract transfers XLM to the seller, calls the escrow
+marketplace to deliver the NFT, deactivates the listing, stores the purchase,
+and emits `purchase/complete` in one Soroban transaction. A failure anywhere
+in that sequence reverts the whole transaction.
+
+### Verified Testnet Purchase
+
+The complete mint → list → buy path was verified using the deployed contracts:
+
+- [Mint test NFT #1](https://stellar.expert/explorer/testnet/tx/28c5a5e4ec44b7659ea20aecc7d9137d57878eda80bd7b19218cadd92d002696)
+- [List it for 1 XLM](https://stellar.expert/explorer/testnet/tx/6008757b77368a1dc3e0b93303ad301ed7ec04d8efa28974cad564ad529c1dee)
+- [Atomic purchase](https://stellar.expert/explorer/testnet/tx/905fda6229469c7fa6457e8bf7e0d9b6037800ad672d1211be751ff0f31c614a)
+
+The buyer `GBRHS7...P5TA` became the NFT owner, the seller received exactly
+`1,000,000` stroops, listing `1` is inactive, and purchase `1` is recorded in
+ledger `3900582`.
+
+### Purchase Configuration
+
+Set the following server environment variables (the same values are present in
+`backend/.env.example`) before running the backend:
+
+```env
+NFT_CONTRACT_ID=CAUBEZ6RC7PWP47FZVBKHPVQ6BRS57FPVPZELZFMVINFNZKOEY6L3MXD
+MUSIC_PURCHASE_CONTRACT_ID=CD4FPDV7VCCVKQBIKU6MBVUPJFW6KMRMB5H4JT6ENR27QWKIPDYQKE5H
+MARKETPLACE_CONTRACT_ID=CBWB4TRYIMG5KQSI6HIKRZIUTYHIGNJ4EHUA4PTO6R3TJSHBXCDB56HE
+PAYMENT_ASSET_CONTRACT_ID=CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
+```
+
+`POST /api/purchase/build` prepares and simulates the Freighter-signable
+transaction. `POST /api/purchase` submits it, polls Soroban RPC, persists the
+confirmed purchase, and returns the real RPC transaction hash and Stellar
+Expert URL.
+
 ## Very Short App Workflow
 
 1. Upload audio to Pinata from the mint page.
