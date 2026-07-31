@@ -4,6 +4,25 @@
 
 > Mint and collect music NFTs on Stellar testnet.
 
+## ✅ Submission Checklist
+
+1. **README with complete documentation** — this document includes setup, deployed contracts, purchase flow, environment variables, CI/CD, and troubleshooting.
+2. **10+ meaningful commits** — the repository contains 42+ commits; inspect with `git log --oneline`.
+3. **Live demo** — [Vercel frontend](https://nft-music-qym1.vercel.app/) · [Render backend](https://nft-music.onrender.com).
+4. **Contract deployment address** — Purchase contract: `CD4FPDV7VCCVKQBIKU6MBVUPJFW6KMRMB5H4JT6ENR27QWKIPDYQKE5H`.
+5. **Transaction hash for contract interaction** — [atomic purchase: `905fda…c614a`](https://stellar.expert/explorer/testnet/tx/905fda6229469c7fa6457e8bf7e0d9b6037800ad672d1211be751ff0f31c614a).
+6. **Mobile responsive UI screenshot** — responsive phone captures are included in [Mobile Responsive View](#mobile-responsive-view).
+7. **CI/CD pipeline running** — [CI workflow](https://github.com/donendosted/NFT_MUSIC/actions/workflows/ci.yml) · [CD workflow](https://github.com/donendosted/NFT_MUSIC/actions/workflows/cd.yml) · status badges below.
+8. **Test output with 3+ passing tests** — `cd backend && npm test`: **3 passing, 0 failing**.
+9. **Demo video (1–2 minutes)** — available in [Video Demo](#video-demo).
+
+```text
+✔ uses valid Stellar contract identifiers for the atomic marketplace
+✔ keeps settlement contracts distinct
+✔ mint service cannot fall back to the legacy NFT environment variables
+tests 3 | pass 3 | fail 0
+```
+
 **Frontend (Vercel):** https://nft-music-qym1.vercel.app/  
 **Backend (Render):** https://nft-music.onrender.com
 
