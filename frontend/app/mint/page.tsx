@@ -154,8 +154,9 @@ export default function MintPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8">
-      <h1 className="text-2xl font-bold text-white mb-8">Mint Music NFT</h1>
+    <div className="page-shell max-w-3xl py-10 sm:py-16">
+      <p className="eyebrow mb-2">Release studio</p>
+      <h1 className="display text-4xl sm:text-5xl mb-8">MINT YOUR SOUND</h1>
 
       {mintResult ? (
         <div className="card p-8 text-center">
@@ -193,7 +194,7 @@ export default function MintPage() {
             {!selectedFile ? (
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full border-2 border-dashed border-slate-700 rounded-xl p-8 text-center hover:border-slate-500 transition-colors"
+                className="w-full border-2 border-dashed border-white/20 rounded-2xl p-8 text-center hover:border-[#35ed7e] transition-colors bg-[#121746]/50"
               >
                 <div className="text-4xl mb-2">🎵</div>
                 <p className="text-slate-400">Click to upload audio file</p>

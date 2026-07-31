@@ -60,9 +60,9 @@ export default function LibraryPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <div className="page-shell py-10 sm:py-16">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-white">My Library</h1>
+        <div><p className="eyebrow mb-2">Collector archive</p><h1 className="display text-4xl">MY VAULT</h1></div>
         <button onClick={fetchMusic} className="btn-primary text-sm">
           Refresh
         </button>
@@ -90,9 +90,9 @@ export default function LibraryPage() {
             const resolvedMusicUrl =
               track.musicUrl || (track.ipfsHash ? `${DEFAULT_IPFS_GATEWAY}/${track.ipfsHash}` : '');
             return (
-              <div key={track._id} className="card p-6">
+              <div key={track._id} className="card p-6 hover:border-[#5865f2]/70 transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-slate-800 rounded-xl flex items-center justify-center text-2xl">
+                  <div className="w-16 h-16 bg-[#5865f2] rounded-xl flex items-center justify-center text-2xl">
                     🎵
                   </div>
                   <div className="flex-1">
