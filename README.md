@@ -87,11 +87,7 @@ npm run migrate:music-indexes
 
 ## Video Demo
 
-
-
-https://github.com/user-attachments/assets/79bd1083-f66c-409f-86bd-f0d2bd1d382d
-
-
+https://github.com/user-attachments/assets/c52ae215-23b5-41bf-937c-2363769f8a7e
 
 ## Mobile Responsive View
 
