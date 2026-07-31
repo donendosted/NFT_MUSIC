@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import uploadRoutes from './routes/uploadRoutes.js';
 import musicRoutes from './routes/musicRoutes.js';
 import mintRoutes from './routes/mintRoutes.js';
+import purchaseRoutes from './routes/purchaseRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ app.get('/health', (req, res) => {
 app.use('/api/upload', uploadRoutes);
 app.use('/api/music', musicRoutes);
 app.use('/api/mint', mintRoutes);
+app.use('/api/purchase', purchaseRoutes);
 
 app.use((err, req, res, next) => {
   console.error('[Error]', err.message);
@@ -43,6 +45,7 @@ const startServer = async () => {
   }
 
   console.log(`[Config] Contract ID: ${process.env.NFT_CONTRACT_ID || 'NOT SET'}`);
+  console.log(`[Config] Purchase Contract ID: ${process.env.MUSIC_PURCHASE_CONTRACT_ID || 'NOT SET'}`);
 
   app.listen(PORT, () => {
     console.log(`[Server] NFT Music Backend running on port ${PORT}`);
