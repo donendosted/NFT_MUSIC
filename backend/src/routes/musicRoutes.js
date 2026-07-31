@@ -23,14 +23,15 @@ router.get('/:walletAddress', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const { limit = 50, offset = 0 } = req.query;
+    const { limit = 50, offset = 0, listed } = req.query;
+    const filter = listed === 'true' ? { 'listing.active': true } : {};
 
-    const music = await MusicNFT.find()
+    const music = await MusicNFT.find(filter)
       .sort({ createdAt: -1 })
       .skip(Number(offset))
       .limit(Number(limit));
 
-    const total = await MusicNFT.countDocuments();
+    const total = await MusicNFT.countDocuments(filter);
 
     res.json({ 
       success: true, 
