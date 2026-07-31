@@ -8,6 +8,9 @@ import { BottomNav } from '@/components/layout/BottomNav';
 export const metadata: Metadata = {
   title: 'NFT Music - Mint & Collect Music NFTs',
   description: 'Mint and collect music NFTs on Stellar',
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
