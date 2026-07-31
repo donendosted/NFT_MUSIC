@@ -141,6 +141,14 @@ STELLAR_NETWORK=testnet
 IPFS_GATEWAY_URL=https://gateway.pinata.cloud/ipfs
 ```
 
+### MongoDB connection troubleshooting
+
+Minting stores the confirmed on-chain NFT in MongoDB immediately after Soroban
+confirms the transaction. Set `MONGODB_URI` to a reachable MongoDB deployment
+before starting the backend. The `/health` endpoint reports `database:
+"connected"` when ready; a `503`/`database: "unavailable"` response means the
+URI, credentials, or MongoDB network access list must be corrected first.
+
 ### Frontend (`frontend/.env.local`)
 
 ```env
