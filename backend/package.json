@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "migrate:music-indexes": "node src/scripts/migrateMusicNftIndexes.js"
+    "migrate:music-indexes": "node src/scripts/migrateMusicNftIndexes.js",
+    "test": "node --test"
   },
   "dependencies": {
     "@stellar/stellar-sdk": "15.0.1",
