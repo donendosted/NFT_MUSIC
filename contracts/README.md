@@ -48,3 +48,5 @@ After deployment, update `backend/src/routes/mintRoutes.js` with your contract I
 - `get_metadata(token_id)` - Get metadata (name, url, artist)
 - `get_tokens_by_owner(owner)` - Get all tokens owned by an address
 - `total_supply()` - Get total number of minted NFTs
+- `transfer(from, to, token_id)` - Transfer an NFT; used by the marketplace's
+  escrow settlement path for atomic purchases.
