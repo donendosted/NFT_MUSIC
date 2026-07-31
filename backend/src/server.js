@@ -7,6 +7,7 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import musicRoutes from './routes/musicRoutes.js';
 import mintRoutes from './routes/mintRoutes.js';
 import purchaseRoutes from './routes/purchaseRoutes.js';
+import listingRoutes from './routes/listingRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/music', musicRoutes);
 app.use('/api/mint', mintRoutes);
 app.use('/api/purchase', purchaseRoutes);
+app.use('/api/listing', listingRoutes);
 
 app.use((err, req, res, next) => {
   console.error('[Error]', err.message);
