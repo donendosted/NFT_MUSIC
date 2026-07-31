@@ -40,7 +40,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-black/95 backdrop-blur-xl border-t border-slate-800"
+      className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#0a0d3a]/95 backdrop-blur-xl lg:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <div className="flex items-center justify-around h-16">
@@ -55,16 +55,16 @@ export function BottomNav() {
                 item.accent
                   ? isActive
                     ? 'text-white'
-                    : 'text-slate-500'
+                    : 'text-white/55'
                   : isActive
-                  ? 'text-slate-400'
-                  : 'text-slate-600'
+                  ? 'text-[#35ed7e]'
+                  : 'text-white/45'
               )}
             >
               {item.accent ? (
                 <div className={cn(
                   'w-10 h-10 rounded-xl flex items-center justify-center transition-colors',
-                  isActive ? 'bg-slate-700' : 'bg-slate-800'
+                  isActive ? 'bg-[#5865f2]' : 'bg-[#1e2353]'
                 )}>
                   {item.icon}
                 </div>
@@ -73,7 +73,7 @@ export function BottomNav() {
               )}
               <span className="text-[10px] font-medium">{item.label}</span>
               {isActive && !item.accent && (
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-slate-700 rounded-full" />
+                <div className="absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-[#35ed7e]" />
               )}
             </Link>
           );

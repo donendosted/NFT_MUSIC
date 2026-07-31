@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white min-h-screen">
+      <body className="min-h-screen bg-[#0a0d3a] text-white">
         <QueryProvider>
           <Navbar />
           <main className="pb-20 lg:pb-0">{children}</main>
@@ -22,9 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             position="bottom-right"
             toastOptions={{
               style: {
-                background: '#000',
+                background: '#1e2353',
                 color: '#fff',
-                border: '1px solid #333',
+                border: '1px solid rgba(255,255,255,.12)',
               },
             }}
           />

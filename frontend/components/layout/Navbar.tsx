@@ -5,43 +5,15 @@ import { usePathname } from 'next/navigation';
 import { WalletButton } from './WalletButton';
 import { cn } from '@/lib/utils';
 
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/mint', label: 'Mint' },
-  { href: '/library', label: 'Library' },
-];
+const navLinks = [{ href: '/', label: 'Discover' }, { href: '/mint', label: 'Mint' }, { href: '/library', label: 'Vault' }];
 
 export function Navbar() {
   const pathname = usePathname();
-
-  return (
-    <header className="sticky top-0 z-50 bg-black/90 backdrop-blur-xl border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="text-lg font-bold text-white">NFT Music</span>
-        </Link>
-
-        <nav className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                'px-4 py-2 rounded-lg text-sm font-medium transition-all',
-                pathname === link.href
-                  ? 'bg-slate-800 text-white'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <WalletButton />
-        </div>
-      </div>
-    </header>
-  );
+  return <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0a0d3a]/85 backdrop-blur-xl">
+    <div className="page-shell flex h-[76px] items-center justify-between gap-5">
+      <Link href="/" className="group flex items-center gap-3 shrink-0"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#5865f2] text-xl font-bold transition-transform group-hover:rotate-6">♫</span><span className="display text-xl tracking-[-.08em]">SOUNDVAULT</span></Link>
+      <nav className="hidden items-center gap-2 md:flex">{navLinks.map(link => <Link key={link.href} href={link.href} className={cn('rounded-xl px-4 py-2 text-sm font-bold transition-colors', pathname === link.href ? 'bg-white text-[#0a0d3a]' : 'text-white/70 hover:bg-white/10 hover:text-white')}>{link.label}</Link>)}</nav>
+      <WalletButton />
+    </div>
+  </header>;
 }

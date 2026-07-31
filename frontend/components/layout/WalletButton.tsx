@@ -27,14 +27,14 @@ export function WalletButton() {
       <div className="relative">
         <button
           onClick={() => setShowDropdown(!showDropdown)}
-          className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-xl transition-all text-sm min-w-[120px]"
+          className="flex items-center gap-2 bg-[#5865f2] hover:bg-[#7380ff] text-white font-semibold py-2.5 px-4 rounded-xl transition-all text-sm min-w-[120px]"
         >
           <div className="w-2 h-2 bg-green-400 rounded-full" />
           <span>{truncateAddress(address)}</span>
         </button>
 
         {showDropdown && (
-          <div className="absolute right-0 top-full mt-2 w-56 bg-dark-100 border border-white/10 rounded-xl shadow-xl z-50 overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 w-56 bg-[#1e2353] border border-white/10 rounded-xl shadow-xl z-50 overflow-hidden">
             <div className="p-3 border-b border-white/5">
               <p className="text-xs text-white/40">Connected Wallet</p>
               <p className="text-sm font-mono text-white mt-0.5 break-all">{address}</p>
