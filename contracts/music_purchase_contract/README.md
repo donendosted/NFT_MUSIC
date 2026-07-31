@@ -42,8 +42,6 @@ contract ID, and Soroban token contract ID for the payment asset.
 - Contract ID: `CD4FPDV7VCCVKQBIKU6MBVUPJFW6KMRMB5H4JT6ENR27QWKIPDYQKE5H`
 - Deploy transaction: [`ab2825e70f5843581af4a8cb72bb8c9bd1994d4efef34c71a1018e742fec4d3e`](https://stellar.expert/explorer/testnet/tx/ab2825e70f5843581af4a8cb72bb8c9bd1994d4efef34c71a1018e742fec4d3e)
 
-The contract is deployed but intentionally not initialized: this repository has
-no marketplace contract ID/ABI or payment-asset contract configuration. Set
-`MARKETPLACE_CONTRACT_ID` and `PAYMENT_ASSET_CONTRACT_ID`, verify that the
-marketplace implements the required interface above, then invoke `initialize`
-with those values before accepting purchases.
+The contract was initialized with the companion escrow marketplace, Music NFT
+v2, and the native-XLM testnet Soroban asset. The original NFT deployment was
+not removed or replaced.
