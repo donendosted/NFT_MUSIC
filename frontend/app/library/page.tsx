@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useWallet } from '@/hooks/useWallet';
 import { WalletButton } from '@/components/layout/WalletButton';
+import { ListTrackModal } from '@/components/nft/ListTrackModal';
 
 interface MusicNFT {
   _id: string;
@@ -14,6 +15,7 @@ interface MusicNFT {
   owner: string;
   txHash: string;
   createdAt: string;
+  listing?: { active: boolean; listingId: string; price: string };
 }
 
 interface PurchaseHistoryItem {
@@ -36,6 +38,7 @@ export default function LibraryPage() {
   const [music, setMusic] = useState<MusicNFT[]>([]);
   const [purchases, setPurchases] = useState<PurchaseHistoryItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [listingTrack, setListingTrack] = useState<MusicNFT | null>(null);
 
   const fetchMusic = async () => {
     if (!address) return;
@@ -123,6 +126,7 @@ export default function LibraryPage() {
                     controls
                     className="h-10"
                   />
+                  {track.listing?.active ? <span className="rounded-lg bg-[#ec48bd] px-3 py-2 text-xs font-bold">Listed · {track.listing.price}</span> : <button onClick={() => setListingTrack(track)} className="btn-primary px-3 py-2 text-xs">List for sale</button>}
                 </div>
               </div>
             );
@@ -134,6 +138,7 @@ export default function LibraryPage() {
         <div className="mb-5 flex items-end justify-between"><div><p className="eyebrow mb-2">On-chain receipts</p><h2 className="display text-3xl">PURCHASE HISTORY</h2></div><span className="text-sm text-white/50">{purchases.length} confirmed</span></div>
         {purchases.length === 0 ? <div className="card p-6 text-sm text-white/60">Your completed purchases will appear here with their Stellar transaction receipts.</div> : <div className="space-y-3">{purchases.map((purchase) => <div key={purchase._id} className="card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-bold text-[#35ed7e]">{purchase.amount} stroops <span className="ml-2 text-xs text-white/45">{purchase.status}</span></p><p className="mt-1 text-xs text-white/55">Listing #{purchase.listingId} · Ledger {purchase.ledger ?? '—'}</p></div><div className="flex items-center gap-2"><code className="rounded-lg bg-[#0a0d3a] px-3 py-2 text-xs">{purchase.transactionHash.slice(0, 10)}…{purchase.transactionHash.slice(-6)}</code><button onClick={() => navigator.clipboard.writeText(purchase.transactionHash)} className="rounded-lg bg-[#5865f2] px-3 py-2 text-xs font-bold">Copy</button><a href={`https://stellar.expert/explorer/testnet/tx/${purchase.transactionHash}`} target="_blank" rel="noreferrer" className="rounded-lg bg-white px-3 py-2 text-xs font-bold text-[#0a0d3a]">Explorer ↗</a></div></div>)}</div>}
       </section>
+      {listingTrack && <ListTrackModal track={listingTrack} onClose={() => setListingTrack(null)} onListed={fetchMusic} />}
     </div>
   );
 }
