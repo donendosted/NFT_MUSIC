@@ -197,7 +197,7 @@ impl MusicPurchaseContract {
             listing_id,
             nft_contract: config.nft_contract,
             marketplace_contract: config.marketplace_contract,
-            seller: listing.seller,
+            seller: listing.seller.clone(),
             buyer: buyer.clone(),
             token_id: listing.token_id,
             purchase_price: listing.price,
