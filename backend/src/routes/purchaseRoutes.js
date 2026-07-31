@@ -43,7 +43,12 @@ router.post('/', async (req, res) => {
 
     const confirmed = await submitPurchaseTransaction(signedTxXDR);
     const seller = nft.listing.seller;
-    const purchaseId = `${PURCHASE_CONTRACT_ID}:${listingId}:${confirmed.transactionHash}`;
+    const onChainPurchaseId = confirmed.returnValue?.purchase_id ?? confirmed.returnValue?.purchaseId;
+    // The value comes from the confirmed contract return. Keep a hash-scoped
+    // fallback only for older RPC responses that omit a return value.
+    const purchaseId = onChainPurchaseId
+      ? `${PURCHASE_CONTRACT_ID}:${onChainPurchaseId}`
+      : `${PURCHASE_CONTRACT_ID}:${listingId}:${confirmed.transactionHash}`;
     const purchase = await Purchase.create({
       purchaseId,
       listingId: String(listingId),

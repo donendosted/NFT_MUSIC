@@ -6,6 +6,7 @@ import {
   StrKey,
   TransactionBuilder,
   nativeToScVal,
+  scValToNative,
   xdr,
 } from '@stellar/stellar-sdk';
 import { Server as RpcServer } from '@stellar/stellar-sdk/rpc';
@@ -62,7 +63,13 @@ export async function submitPurchaseTransaction(signedTxXDR) {
   while (Date.now() < timeoutAt) {
     const result = await server.getTransaction(sendResult.hash);
     if (result.status === 'SUCCESS') {
-      return { transactionHash: sendResult.hash, ledger: result.ledger, status: result.status, result };
+      return {
+        transactionHash: sendResult.hash,
+        ledger: result.ledger,
+        status: result.status,
+        returnValue: result.returnValue ? scValToNative(result.returnValue) : null,
+        result,
+      };
     }
     if (result.status === 'FAILED') throw new Error('Purchase transaction failed on-chain');
     await new Promise((resolve) => setTimeout(resolve, 1_000));
