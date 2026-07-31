@@ -55,7 +55,13 @@ NFT_CONTRACT_ID=CAUBEZ6RC7PWP47FZVBKHPVQ6BRS57FPVPZELZFMVINFNZKOEY6L3MXD
 MUSIC_PURCHASE_CONTRACT_ID=CD4FPDV7VCCVKQBIKU6MBVUPJFW6KMRMB5H4JT6ENR27QWKIPDYQKE5H
 MARKETPLACE_CONTRACT_ID=CBWB4TRYIMG5KQSI6HIKRZIUTYHIGNJ4EHUA4PTO6R3TJSHBXCDB56HE
 PAYMENT_ASSET_CONTRACT_ID=CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
+MARKETPLACE_NFT_CONTRACT_ID=CAUBEZ6RC7PWP47FZVBKHPVQ6BRS57FPVPZELZFMVINFNZKOEY6L3MXD
 ```
+
+Only Music NFT v2 tokens can be listed in the atomic marketplace. Tokens minted
+on the preserved original v1 contract cannot be escrowed because that contract
+does not implement NFT transfer; the listing API reports this before requesting
+a wallet signature.
 
 `POST /api/purchase/build` prepares and simulates the Freighter-signable
 transaction. `POST /api/purchase` submits it, polls Soroban RPC, persists the

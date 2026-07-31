@@ -8,6 +8,7 @@ import { ListTrackModal } from '@/components/nft/ListTrackModal';
 interface MusicNFT {
   _id: string;
   tokenId: number;
+  contractAddress: string;
   name: string;
   artist: string;
   musicUrl: string;
