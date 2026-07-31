@@ -3,4 +3,3 @@ export { LiveSaleFeed } from './LiveSaleFeed';
 export { MarketplaceDrops } from './MarketplaceDrops';
 export { PurchaseModal } from './PurchaseModal';
 export { ListTrackModal } from './ListTrackModal';
-export { DiscIcon } from './DiscIcon';

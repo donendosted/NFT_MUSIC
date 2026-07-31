@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useWallet } from '@/hooks/useWallet';
 import { WalletButton } from '@/components/layout/WalletButton';
 import { ListTrackModal } from '@/components/nft/ListTrackModal';
-import { DiscIcon } from '@/components/nft/DiscIcon';
+import { Disc3 } from 'lucide-react';
 
 interface MusicNFT {
   _id: string;
@@ -115,7 +115,7 @@ export default function LibraryPage() {
             return (
               <div key={track._id} className="card p-5 sm:p-6 hover:border-[#5865f2]/70 transition-colors">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <DiscIcon className="h-14 w-14 shrink-0" />
+                  <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#5865f2]"><Disc3 className="h-8 w-8 text-white" strokeWidth={1.8} /></div>
                   <div className="min-w-0 flex-1">
                     <h3 className="text-lg font-semibold text-white">{track.name}</h3>
                     <p className="text-slate-400">{track.artist}</p>
