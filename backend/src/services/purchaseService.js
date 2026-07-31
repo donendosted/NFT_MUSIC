@@ -10,8 +10,9 @@ import {
   xdr,
 } from '@stellar/stellar-sdk';
 import { Server as RpcServer } from '@stellar/stellar-sdk/rpc';
+import { MUSIC_PURCHASE_CONTRACT_ID } from '../config/contracts.js';
 
-const PURCHASE_CONTRACT_ID = process.env.MUSIC_PURCHASE_CONTRACT_ID;
+const PURCHASE_CONTRACT_ID = MUSIC_PURCHASE_CONTRACT_ID;
 const RPC_URL = process.env.STELLAR_RPC_URL || 'https://soroban-testnet.stellar.org';
 const STELLAR_NETWORK = (process.env.STELLAR_NETWORK || 'testnet').toLowerCase();
 const NETWORK_PASSPHRASE = process.env.STELLAR_NETWORK_PASSPHRASE ||

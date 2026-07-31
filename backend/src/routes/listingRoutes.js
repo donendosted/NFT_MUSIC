@@ -2,13 +2,13 @@ import express from 'express';
 import MusicNFT from '../models/MusicNFT.js';
 import { buildListingTransaction, MARKETPLACE_CONTRACT_ID } from '../services/marketplaceService.js';
 import { submitPurchaseTransaction } from '../services/purchaseService.js';
+import { MUSIC_NFT_V2_CONTRACT_ID, PAYMENT_ASSET_CONTRACT_ID } from '../config/contracts.js';
 
 const router = express.Router();
-const PAYMENT_ASSET_CONTRACT_ID = process.env.PAYMENT_ASSET_CONTRACT_ID;
 // This must match the NFT address used when the on-chain escrow marketplace
 // was initialized. The legacy NFT deployment has no transfer method and cannot
 // be listed through the atomic marketplace.
-const MARKETPLACE_NFT_CONTRACT_ID = process.env.MARKETPLACE_NFT_CONTRACT_ID || 'CAUBEZ6RC7PWP47FZVBKHPVQ6BRS57FPVPZELZFMVINFNZKOEY6L3MXD';
+const MARKETPLACE_NFT_CONTRACT_ID = MUSIC_NFT_V2_CONTRACT_ID;
 
 async function findOwnedNft(tokenId, seller, contractAddress) {
   if (contractAddress !== MARKETPLACE_NFT_CONTRACT_ID) {

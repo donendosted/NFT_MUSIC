@@ -2,11 +2,9 @@ import express from 'express';
 import MusicNFT from '../models/MusicNFT.js';
 import Purchase from '../models/Purchase.js';
 import { buildPurchaseTransaction, purchaseExplorerUrl, PURCHASE_CONTRACT_ID, submitPurchaseTransaction } from '../services/purchaseService.js';
+import { MARKETPLACE_CONTRACT_ID, MUSIC_NFT_V2_CONTRACT_ID, PAYMENT_ASSET_CONTRACT_ID } from '../config/contracts.js';
 
 const router = express.Router();
-const NFT_CONTRACT_ID = process.env.NFT_CONTRACT_ID || process.env.NFT_COLLECTION_ID;
-const MARKETPLACE_CONTRACT_ID = process.env.MARKETPLACE_CONTRACT_ID;
-const PAYMENT_ASSET_CONTRACT_ID = process.env.PAYMENT_ASSET_CONTRACT_ID;
 
 async function findActiveListing(listingId) {
   return MusicNFT.findOne({ 'listing.listingId': String(listingId), 'listing.active': true });
@@ -52,14 +50,14 @@ router.post('/', async (req, res) => {
     const purchase = await Purchase.create({
       purchaseId,
       listingId: String(listingId),
-      nftContract: NFT_CONTRACT_ID || nft.contractAddress,
-      marketplaceContract: MARKETPLACE_CONTRACT_ID || nft.listing.marketplaceContract || '',
+      nftContract: MUSIC_NFT_V2_CONTRACT_ID,
+      marketplaceContract: MARKETPLACE_CONTRACT_ID,
       purchaseContract: PURCHASE_CONTRACT_ID,
       tokenId: nft.tokenId,
       buyer,
       seller,
       amount: String(offeredPrice),
-      asset: PAYMENT_ASSET_CONTRACT_ID || nft.listing.asset || '',
+      asset: PAYMENT_ASSET_CONTRACT_ID,
       ledger: confirmed.ledger,
       transactionHash: confirmed.transactionHash,
       status: confirmed.status,

@@ -8,6 +8,7 @@ import musicRoutes from './routes/musicRoutes.js';
 import mintRoutes from './routes/mintRoutes.js';
 import purchaseRoutes from './routes/purchaseRoutes.js';
 import listingRoutes from './routes/listingRoutes.js';
+import { MUSIC_NFT_V2_CONTRACT_ID, MUSIC_PURCHASE_CONTRACT_ID } from './config/contracts.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -68,8 +69,8 @@ const connectDatabase = async () => {
 const startServer = async () => {
   await connectDatabase();
 
-  console.log(`[Config] Contract ID: ${process.env.NFT_CONTRACT_ID || 'NOT SET'}`);
-  console.log(`[Config] Purchase Contract ID: ${process.env.MUSIC_PURCHASE_CONTRACT_ID || 'NOT SET'}`);
+  console.log(`[Config] Music NFT v2 Contract ID: ${MUSIC_NFT_V2_CONTRACT_ID}`);
+  console.log(`[Config] Purchase Contract ID: ${MUSIC_PURCHASE_CONTRACT_ID}`);
 
   app.listen(PORT, () => {
     console.log(`[Server] NFT Music Backend running on port ${PORT}`);

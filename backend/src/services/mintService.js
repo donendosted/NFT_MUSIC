@@ -11,8 +11,8 @@ import {
 } from '@stellar/stellar-sdk';
 
 import { Server as rpc } from '@stellar/stellar-sdk/rpc';
+import { MUSIC_NFT_V2_CONTRACT_ID } from '../config/contracts.js';
 
-const NFT_CONTRACT_ID = process.env.NFT_CONTRACT_ID || process.env.NFT_COLLECTION_ID;
 const RPC_URL = process.env.STELLAR_RPC_URL || 'https://soroban-testnet.stellar.org';
 const STELLAR_NETWORK = (process.env.STELLAR_NETWORK || 'testnet').toLowerCase();
 const NETWORK_PASSPHRASE =
@@ -21,15 +21,11 @@ const NETWORK_PASSPHRASE =
 const sorobanServer = new rpc(RPC_URL);
 
 export async function buildMintTransaction(walletAddress, name, musicUri, artist) {
-  if (!NFT_CONTRACT_ID) {
-    throw new Error('NFT_CONTRACT_ID is not configured');
+  if (!StrKey.isValidContract(MUSIC_NFT_V2_CONTRACT_ID)) {
+    throw new Error('MUSIC_NFT_V2_CONTRACT_ID is invalid');
   }
 
-  if (!StrKey.isValidContract(NFT_CONTRACT_ID)) {
-    throw new Error('NFT_CONTRACT_ID is invalid');
-  }
-
-  const contractIdBuffer = StrKey.decodeContract(NFT_CONTRACT_ID);
+  const contractIdBuffer = StrKey.decodeContract(MUSIC_NFT_V2_CONTRACT_ID);
 
   const account = await sorobanServer.getAccount(walletAddress);
 

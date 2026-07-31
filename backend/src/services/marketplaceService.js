@@ -1,7 +1,7 @@
 import { Address, BASE_FEE, Networks, Operation, StrKey, TransactionBuilder, nativeToScVal, xdr } from '@stellar/stellar-sdk';
 import { Server as RpcServer } from '@stellar/stellar-sdk/rpc';
+import { MARKETPLACE_CONTRACT_ID } from '../config/contracts.js';
 
-const MARKETPLACE_CONTRACT_ID = process.env.MARKETPLACE_CONTRACT_ID;
 const RPC_URL = process.env.STELLAR_RPC_URL || 'https://soroban-testnet.stellar.org';
 const NETWORK_PASSPHRASE = process.env.STELLAR_NETWORK_PASSPHRASE || Networks.TESTNET;
 const server = new RpcServer(RPC_URL);

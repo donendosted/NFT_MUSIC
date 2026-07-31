@@ -1,10 +1,10 @@
 import express from 'express';
 import { buildMintTransaction, submitTransaction } from '../services/mintService.js';
 import MusicNFT from '../models/MusicNFT.js';
+import { MUSIC_NFT_V2_CONTRACT_ID } from '../config/contracts.js';
 
 const router = express.Router();
 const DEFAULT_IPFS_GATEWAY = process.env.IPFS_GATEWAY_URL || 'https://gateway.pinata.cloud/ipfs';
-const NFT_CONTRACT_ID = process.env.NFT_CONTRACT_ID || process.env.NFT_COLLECTION_ID;
 
 function normalizeIpfsHash(value = '') {
   if (!value || typeof value !== 'string') return null;
@@ -94,7 +94,7 @@ router.post('/submit', async (req, res) => {
       owner: walletAddress,
       walletAddress: walletAddress.toLowerCase(),
       txHash: result.txHash,
-      contractAddress: NFT_CONTRACT_ID,
+      contractAddress: MUSIC_NFT_V2_CONTRACT_ID,
     });
 
     await musicNFT.save();
