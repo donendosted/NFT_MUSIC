@@ -16,11 +16,25 @@ interface MusicNFT {
   createdAt: string;
 }
 
+interface PurchaseHistoryItem {
+  _id: string;
+  purchaseId: string;
+  listingId: string;
+  buyer: string;
+  seller: string;
+  amount: string;
+  ledger?: number;
+  transactionHash: string;
+  timestamp: string;
+  status: string;
+}
+
 const DEFAULT_IPFS_GATEWAY = 'https://gateway.pinata.cloud/ipfs';
 
 export default function LibraryPage() {
   const { address, isConnected } = useWallet();
   const [music, setMusic] = useState<MusicNFT[]>([]);
+  const [purchases, setPurchases] = useState<PurchaseHistoryItem[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchMusic = async () => {
@@ -34,6 +48,10 @@ export default function LibraryPage() {
       if (res.ok) {
         setMusic(data.data || []);
       }
+
+      const purchaseRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/purchase/history/${address}`);
+      const purchaseData = await purchaseRes.json();
+      if (purchaseRes.ok) setPurchases(purchaseData.data || []);
     } catch (err) {
       console.error('Failed to fetch music:', err);
     } finally {
@@ -111,6 +129,11 @@ export default function LibraryPage() {
           })}
         </div>
       )}
+
+      <section className="mt-12">
+        <div className="mb-5 flex items-end justify-between"><div><p className="eyebrow mb-2">On-chain receipts</p><h2 className="display text-3xl">PURCHASE HISTORY</h2></div><span className="text-sm text-white/50">{purchases.length} confirmed</span></div>
+        {purchases.length === 0 ? <div className="card p-6 text-sm text-white/60">Your completed purchases will appear here with their Stellar transaction receipts.</div> : <div className="space-y-3">{purchases.map((purchase) => <div key={purchase._id} className="card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-bold text-[#35ed7e]">{purchase.amount} stroops <span className="ml-2 text-xs text-white/45">{purchase.status}</span></p><p className="mt-1 text-xs text-white/55">Listing #{purchase.listingId} · Ledger {purchase.ledger ?? '—'}</p></div><div className="flex items-center gap-2"><code className="rounded-lg bg-[#0a0d3a] px-3 py-2 text-xs">{purchase.transactionHash.slice(0, 10)}…{purchase.transactionHash.slice(-6)}</code><button onClick={() => navigator.clipboard.writeText(purchase.transactionHash)} className="rounded-lg bg-[#5865f2] px-3 py-2 text-xs font-bold">Copy</button><a href={`https://stellar.expert/explorer/testnet/tx/${purchase.transactionHash}`} target="_blank" rel="noreferrer" className="rounded-lg bg-white px-3 py-2 text-xs font-bold text-[#0a0d3a]">Explorer ↗</a></div></div>)}</div>}
+      </section>
     </div>
   );
 }
