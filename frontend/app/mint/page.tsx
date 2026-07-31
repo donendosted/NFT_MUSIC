@@ -156,7 +156,7 @@ export default function MintPage() {
   return (
     <div className="page-shell max-w-3xl py-10 sm:py-16">
       <p className="eyebrow mb-2">Release studio</p>
-      <h1 className="display text-4xl sm:text-5xl mb-8">MINT YOUR SOUND</h1>
+      <h1 className="display text-4xl sm:text-5xl mb-8">MINT ON STELLAR</h1>
 
       {mintResult ? (
         <div className="card p-8 text-center">
@@ -266,7 +266,7 @@ export default function MintPage() {
                   disabled={minting || !uploadedIpfsHash}
                   className="btn-accent w-full"
                 >
-                  {minting ? 'Minting...' : 'Mint NFT'}
+                  {minting ? 'Minting on Stellar...' : 'Mint on Stellar'}
                 </button>
               </div>
             )}

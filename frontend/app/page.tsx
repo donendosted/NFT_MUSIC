@@ -24,9 +24,9 @@ export default function HomePage() {
         <div className="relative z-10">
           <p className="eyebrow mb-5"><span className="h-2 w-2 rounded-full bg-[#35ed7e]" /> On Stellar testnet</p>
           <h1 className="display max-w-3xl text-[clamp(3.5rem,8vw,6.7rem)] leading-[.86]">MUSIC<br />YOU CAN<br /><span className="text-[#35ed7e]">OWN.</span></h1>
-          <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl">Drop your tracks, mint them on-chain, and collect the next sound to move the culture. Your music deserves more than a stream.</p>
+          <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl">Drop your tracks, mint on Stellar, and collect the next sound to move the culture. Your music deserves more than a stream.</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            {isConnected ? <Link href="/mint" className="btn-accent text-lg">Mint a track <span className="ml-2">↗</span></Link> : <WalletButton />}
+            {isConnected ? <Link href="/mint" className="btn-accent text-lg">Mint on Stellar <span className="ml-2">↗</span></Link> : <WalletButton />}
             <Link href="/library" className="btn-secondary text-lg">Explore your vault</Link>
           </div>
         </div>
@@ -40,11 +40,11 @@ export default function HomePage() {
       <div className="mb-10 max-w-2xl"><p className="eyebrow mb-3">The new music economy</p><h2 className="display text-4xl leading-none sm:text-6xl">A LOUDER WAY TO RELEASE.</h2></div>
       <div className="grid gap-5 md:grid-cols-2">
         <article className="gradient-card min-h-[330px] rounded-[40px] p-8 sm:p-10"><p className="text-sm font-bold tracking-widest">01 / CREATE</p><h3 className="display mt-10 max-w-md text-4xl leading-none sm:text-5xl">TURN TRACKS INTO DIGITAL ORIGINALS.</h3><div className="mt-7 flex gap-2">{[.4,.8,.55,1,.7,.35,.9].map((v, i) => <span key={i} className="w-3 rounded-full bg-white" style={{ height: `${v * 48}px`, animation: `bars ${.7 + i / 7}s ease-in-out infinite` }} />)}</div></article>
-        <article className="card flex min-h-[330px] flex-col justify-between p-8 sm:p-10"><div><p className="text-sm font-bold tracking-widest text-[#35ed7e]">02 / COLLECT</p><h3 className="display mt-6 max-w-md text-4xl leading-none sm:text-5xl">YOUR VAULT. YOUR SOUND.</h3></div><div className="rounded-2xl border border-white/10 bg-[#0a0d3a] p-5"><div className="flex items-center justify-between text-sm"><span className="font-bold">MIDNIGHT FREQUENCY</span><span className="rounded-md bg-[#ec48bd] px-2 py-1 text-xs font-bold">#0042</span></div><div className="mt-4 h-2 rounded-full bg-white/10"><div className="h-full w-2/3 rounded-full bg-[#35ed7e]" /></div></div></article>
+        <article className="card flex min-h-[330px] flex-col justify-between p-8 sm:p-10"><div><p className="text-sm font-bold tracking-widest text-[#35ed7e]">02 / COLLECT</p><h3 className="display mt-6 max-w-md text-4xl leading-none sm:text-5xl">YOUR VAULT. YOUR SOUND.</h3></div><div className="rounded-2xl border border-white/10 bg-[#0a0d3a] p-5"><div className="flex items-center justify-between text-sm"><span className="font-bold">STELLAR VAULT</span><span className="rounded-md bg-[#ec48bd] px-2 py-1 text-xs font-bold">ON-CHAIN</span></div><div className="mt-4 h-2 rounded-full bg-white/10"><div className="h-full w-2/3 rounded-full bg-[#35ed7e]" /></div></div></article>
       </div>
     </section>
 
     <MarketplaceDrops />
-    <section className="page-shell pb-16 sm:pb-24"><div className="rounded-[40px] bg-[#5865f2] px-7 py-12 text-center sm:px-12 sm:py-16"><p className="eyebrow justify-center text-white/75">Open to every sound</p><h2 className="display mx-auto mt-4 max-w-4xl text-4xl leading-none sm:text-6xl">MAKE THE FIRST DROP COUNT.</h2><p className="mx-auto mt-5 max-w-xl text-lg text-white/80">Connect Freighter, upload your audio, and give your next release a permanent home.</p><Link href="/mint" className="btn-accent mt-8 text-lg">Start minting</Link></div></section>
+    <section className="page-shell pb-16 sm:pb-24"><div className="rounded-[40px] bg-[#5865f2] px-7 py-12 text-center sm:px-12 sm:py-16"><p className="eyebrow justify-center text-white/75">Open to every sound</p><h2 className="display mx-auto mt-4 max-w-4xl text-4xl leading-none sm:text-6xl">MAKE THE FIRST DROP COUNT.</h2><p className="mx-auto mt-5 max-w-xl text-lg text-white/80">Connect Freighter, upload your track, and mint its next chapter on Stellar.</p><Link href="/mint" className="btn-accent mt-8 text-lg">Mint on Stellar</Link></div></section>
   </>;
 }

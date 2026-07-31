@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useWallet } from '@/hooks/useWallet';
 import { WalletButton } from '@/components/layout/WalletButton';
 import { ListTrackModal } from '@/components/nft/ListTrackModal';
+import { DiscIcon } from '@/components/nft/DiscIcon';
 
 interface MusicNFT {
   _id: string;
@@ -112,22 +113,15 @@ export default function LibraryPage() {
             const resolvedMusicUrl =
               track.musicUrl || (track.ipfsHash ? `${DEFAULT_IPFS_GATEWAY}/${track.ipfsHash}` : '');
             return (
-              <div key={track._id} className="card p-6 hover:border-[#5865f2]/70 transition-colors">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-[#5865f2] rounded-xl flex items-center justify-center text-2xl">
-                    🎵
-                  </div>
-                  <div className="flex-1">
+              <div key={track._id} className="card p-5 sm:p-6 hover:border-[#5865f2]/70 transition-colors">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <DiscIcon className="h-14 w-14 shrink-0" />
+                  <div className="min-w-0 flex-1">
                     <h3 className="text-lg font-semibold text-white">{track.name}</h3>
                     <p className="text-slate-400">{track.artist}</p>
                     <p className="text-slate-500 text-sm">Token ID: {track.tokenId}</p>
                   </div>
-                  <audio
-                    src={resolvedMusicUrl}
-                    controls
-                    className="h-10"
-                  />
-                  {track.listing?.active ? <span className="rounded-lg bg-[#ec48bd] px-3 py-2 text-xs font-bold">Listed · {track.listing.price}</span> : <button onClick={() => setListingTrack(track)} className="btn-primary px-3 py-2 text-xs">List for sale</button>}
+                  <div className="flex flex-col gap-3 sm:items-end"><audio src={resolvedMusicUrl} controls className="h-10 w-full max-w-[260px] sm:w-[220px]" />{track.listing?.active ? <span className="rounded-lg bg-[#ec48bd] px-3 py-2 text-center text-xs font-bold">Listed · {track.listing.price}</span> : <button onClick={() => setListingTrack(track)} className="btn-primary px-3 py-2 text-xs">List for sale</button>}</div>
                 </div>
               </div>
             );
